@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+
         :root {
             /* normal theme */
             --main-color: #0a0a0b; 
@@ -142,7 +143,7 @@
         .btn:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0px #000; }
         .btn:disabled { background: #3a3a3c !important; border-color: #515154; color: #7b7b80; box-shadow: none; }
 
-        /* Gift Cards */
+        /* Gift Cards + a wraping feature */
         .gift-card {
             background: white; border-radius: 25px; padding: 20px; margin-bottom: 15px; position: relative; border: 3px solid transparent; transition: 0.3s; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1); color: #000;
         }
@@ -158,6 +159,26 @@
         .box-wrap { font-size: 8rem; position: relative; }
         .gift-tag { font-size: 1.2rem; background: white; color: black; padding: 10px; border-radius: 10px; position: absolute; top: -40px; animation: dropIn 1s forwards; font-weight: 800;}
         @keyframes dropIn { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(100px); opacity: 0; } }
+        /* another featuree (panic button) */
+        .panic-link {
+            display: block;
+            text-align: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-decoration: underline;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            color: var(--txt);
+
+        }
+
+        .panic-link:hover {
+            opacity: 1;
+        }
+    
     </style>
 </head>
 <body class="theme-default">
@@ -197,7 +218,8 @@
             <div id="s2" class="step"><label>Age?</label><input type="number" id="age" placeholder="Enter age..."><span class="bypass" onclick="goPersona()">continue without age</span><button class="btn" id="ageNext" disabled>Continue</button></div>
             <div id="s3" class="step"><label>Gift Type</label><select id="type"><option>Cozy</option><option>Social</option><option>Cool Tech</option><option>Self Care</option><option>Sporty</option><option>Chill</option><option>Funny</option><option>Light-hearted</option></select>
                 <label>Budget</label><select id="budget"><option value="low">$0 - $25</option><option value="mid">$25 - $75</option><option value="high">$100+</option></select>
-                <button class="btn" onclick="find()">Find Gifts</button>
+                <button class="btn" onclick="find()">Find Gifts</button> 
+                <span class="panic-link" onclick="panicmode()"> I'm desperate</span>
             </div>
         </div>
     </div>
@@ -232,12 +254,13 @@
         };
     });
 
+
     document.getElementById('s1Next').onclick=()=>{ document.getElementById('s1').classList.remove('active'); if(['friend','bestfriend','partner'].includes(who)) document.getElementById('s2').classList.add('active'); else goPersona(); };
     document.getElementById('age').oninput=(e)=>document.getElementById('ageNext').disabled=e.target.value<=0;
     function goPersona(){ document.getElementById('s1').classList.remove('active'); document.getElementById('s2').classList.remove('active'); document.getElementById('s3').classList.add('active'); }
     document.getElementById('ageNext').onclick=goPersona;
 
-	// categories, links
+	// giftcategories, links
 
     const db = [
         {n:"Sloth Coffee Mug", d:"Funny and cozy accessory.", p:19, t:["Cozy", "Funny"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/Decodyne-Sloth-Funny-Coffee-Gifts/dp/B07YNXLWJ9"},
@@ -301,6 +324,47 @@
     function wrap(e,n){ e.stopPropagation(); document.getElementById('wrapLabel').textContent=n; document.getElementById('wrapOverlay').style.display='flex'; type("I'm sure they're gonna LOVE this!!! come back soon :3"); setTimeout(()=>document.getElementById('wrapOverlay').style.display='none', 2500); }
     function cancel(e,id){ e.stopPropagation(); const c=document.getElementById(`gift-${id}`); c.style.opacity="0"; setTimeout(()=>c.remove(),300); type("It's okayy keep searching you'll find something better"); }
     window.onclick=()=>document.querySelectorAll('.menu-dropdown').forEach(d=>d.style.display='none');
+// qucik gifts
+    const panicGifts = [
+        {n: "High-Quality Throw Blanket", d: "You literally cannot go wrong with a soft blanket", url: "https://www.amazon.com" },
+        {n: "Premium Scented Candle", d: "Smells like effort", url: "https://www.amazon.com/s?k=luxury+scented+candle" },
+        {n:  "Leather Card Holder", d: "Minimal, clean, and useful for anyone", url: "https://www.amazon.com/s?k=mid+century+modern+lamp"},
+        {n: "Aesthetic Dark lamp", d: " Makes any room look 10x better", url: "https://www.amazon.com/s?k=mid+century+modern+lamp "},
+        {m: " Coffee Mug ", d: "drink drink drink", url: "https://www.amazon.com/s?k=yeti+tumbler"},
+    ];
+
+
+    function panicMode() {
+    type("Ok ok don't worry, these always work!!");
+    
+    // trigers the sliding ani for findGifts
+    document.getElementById('app').classList.add('results-active');
+    const rs = document.getElementById('resultsSide');
+    rs.style.display = "block";
+    setTimeout(() => rs.style.opacity = "1", 100);
+
+    const list = document.getElementById('giftList');
+    list.innerHTML = "";
+
+    // shuff
+    const shuffled = panicGifts.sort(() => 0.5 - Math.random());
+    let selected = shuffled.slice(0, 3);
+
+    selected.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'gift-card';
+        card.id = `panic-${idx}`;
+        card.innerHTML = `
+            <button class="dots" onclick="toggleMenu(event,'p-${idx}')">⋮</button>
+            <div class="menu-dropdown" id="menu-p-${idx}"><a href="${item.url}" target="_blank" style="font-size:0.75rem; font-weight:800; color:#007aff; text-decoration:none;">View Link</a></div>
+            <h4 style="font-weight:800;">${item.n}</h4><p style="font-size:0.8rem; color:#666;">${item.d}</p>
+            <div class="gift-actions">
+                <button class="mini-btn wrap-btn" onclick="wrap(event,'${item.n}')">Wrap</button>
+                <button class="mini-btn cancel-btn" onclick="this.parentNode.parentNode.remove()">Cancel</button>
+            </div>`;
+        list.appendChild(card);
+    });
+}
 </script>
 </body>
 </html>
