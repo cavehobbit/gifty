@@ -1,48 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-<body style="background:#ffafd2; font-family:sans-serif; display:flex; justify-content:center; align-items:center; min-height:100vh; overflow:hidden; margin:0;">
-    <div style="position:fixed; background:#fff; filter:blur(40px); width:150px; height:150px; top:10%; left:10%; border-radius:50%;"></div>
-    <div id="guide" style="position:fixed; z-index:9; transition:0.7s; display:flex; flex-direction:column; align-items:center; top:50%; left:50%; transform:translate(-50%,-50%);">
-        <div id="bubble" style="background:#fff; padding:10px; border-radius:15px; margin-bottom:10px; font-weight:bold; visibility:hidden;"></div>
-        <div style="width:80px; height:80px; background:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:30px; box-shadow:0 5px 15px rgba(0,0,0,0.2)">tempo</div>
-        <button id="cont" onclick="go()" style="margin-top:10px; padding:10px 20px; cursor:pointer; border-radius:10px; border:2px solid #000; background:#fff;">Continue</button>
-    </div>
-    <div id="wrap" style="display:flex; gap:30px; transition:0.8s; align-items:flex-start; transform:translateY(20px); opacity:0;">
-        <div style="background:rgba(255,255,255,0.7); backdrop-filter:blur(20px); padding:25px; border-radius:30px; width:380px; border:1px solid #fff;">
-            <h1>Gifty.</h1>
-            <div id="s1"><h3>Who for?</h3><button onclick="st(2)" style="width:100%; padding:12px; margin:5px 0; border-radius:10px; border:none; cursor:pointer;">Friend</button></div>
-            <div id="s2" style="display:none;"><h3>Age?</h3><input type="number" id="age" style="width:100%; padding:10px; border-radius:10px;"><button onclick="st(3)" style="width:100%; margin-top:10px; padding:10px;">Next</button></div>
-            <div id="s3" style="display:none;"><h3>Type?</h3><select id="type" style="width:100%; padding:10px;"><option>Cozy</option><option>Funny</option></select><button onclick="find()" style="width:100%; margin-top:15px; padding:15px; background:#ffafd2; border:2px solid #000; font-weight:bold; cursor:pointer;">FIND GIFTS</button></div>
+	<head>
+		<meta charset="UTF-8">
+		<title> Grifty </title>
+		<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600800&display=swap" rel="stylesheet">
+		<style>
+        :root { --mc: #ffafd2; --glass: rgba(255,255,255,0.7); 
+			--txt: #1d1d1f; --bgp: #fbbcd5; --btn-bg: #ffafd2; }
+        body.parents { --mc: #ffea70; --bgp: #f0d54a; }
+		body.grandparents { --mc: #a7f3d0; --bgp: #6ee7b7; }
+        body.bestfriend { --mc: #1e3a8a; 
+			--bgp: #1e40af; --txt: #fff; --glass: rgba(255,255,255,0.1); }
+        body.partner { --mc: #ff4d6d; 
+		--bgp: #c9184a; --txt: #000; --glass: rgba(255,255,255,0.8); }
+        * { margin:0; padding:0; box-sizing:border-box; }
+		body { font-family: 'Plus Jakarta Sans', sans-serif; 
+		background: var(--mc); color: var(--txt);
+		min-height: 100vh; display: flex; 
+		justify-content: center; align-items: center; 
+		transition: 0.5s; overflow: hidden; }
+		.wrapper-bg { 
+			position: fixed; inset: -50%; width: 200%; 
+			height: 200%; 
+			background-image: linear-gradient(30deg, var(--bgp) 12%, transparent 12.5%, transparent 87%, var(--bgp) 87.5%, var(--bgp)), linear-gradient(150deg, var(--bgp) 12%, transparent 12.5%, transparent 87%, var(--bgp) 87.5%, var(--bgp)); 
+			background-size: 80px 140px; transform: rotate(-15deg); 
+			z-index: -2; opacity: 0.4; }
+        .spot { position: fixed; background: white; 
+			filter: blur(35px); border-radius: 50%; z-index: -1; 
+			width: 160px; height: 160px; }
+        .app-container { display: flex; 
+			align-items: flex-start; gap: 40px;
+			transition: 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+        .main-box { width: 400px; 
+			background: var(--glass); 
+			backdrop-filter: blur(20px); 
+			border-radius: 30px; padding: 25px; 
+			box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+			border: 1px solid rgba(255,255,255,0.4); } #guide { 
+				position: fixed; z-index: 99; display: flex; 
+			flex-direction: column; align-items: center; 
+			transition: 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+        .g-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .g-corner { bottom: 20px; right: 20px; align-items: flex-end; }
+        .bubble { background: white; padding: 15px; 
+			border-radius: 20px; font-size: 0.9rem; 
+			margin-bottom: 10px; max-width: 250px; opacity: 0; 
+			transition: 0.3s; color: #000; 
+			box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .avatar { width: 80px; height: 80px; 
+			background: white; border-radius: 50%; 
+			display: flex; align-items: center; 
+			justify-content: center; font-size: 1rem; 
+			border: 3px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+			color:#000; }
+        .step { display: none; } .step.active { display: block; animation: slideUp 0.4s; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } }
+        .btn { width: 100%; 
+			background: var(--btn-bg, #fff); color: #000; 
+			border: 3px solid #000; padding: 15px; 
+			border-radius: 15px; font-weight: 800; 
+			cursor: pointer; box-shadow: 4px 4px 0 #000; 
+			margin-top: 10px; }
+        .who-btn { width: 100%;
+			background: #fff; border: 2px solid transparent; padding: 12px; 
+			border-radius: 12px; margin-bottom: 5px; 
+			text-align: left; cursor: pointer; color:#000; font-weight: 600; }
+        .who-btn.sel { border-color: #000; }
+        #resSide { width: 400px; display: none; opacity: 0;
+			transition: 0.5s; }
+        .gift-card { background: #fff; 
+			padding: 20px; border-radius: 20px;
+			margin-bottom: 10px; position: relative; 
+			color:#000; border: 3px solid transparent; }
+        .dots { position: absolute; top: 10px; 
+			right: 10px; cursor: pointer; font-size: 1.2rem; }
+        input, select { width: 100%; padding: 12px; 
+			border-radius: 12px; border: 1px solid #ccc; margin: 10px 0; 
+			font-family: inherit; }
+        #pageShadow { position: fixed; inset: 0; 
+			background: rgba(0,0,0,0.7); 
+			backdrop-filter: blur(8px); z-index: 90; 
+			transition: 0.5s; }
+
+
+    	</style>
+	</html>
+	<!-- black n pink default theme -->
+	<body class="theme-default">
+		<div class="wrapper-bg"></div> 
+		<div class="spot" style="top: 10%; left: 10%; "></div>
+		<div class="spot" style="bottom: 10%; right: 10%;"></div>
+		<div id="pageShadow"></div>
+		<div id="guide" class="g-center">
+			<div id="bubble" class="bubble"></div>
+			<div class="avatar">DOG</div>
+			<button id="introBtn" class="btn" style="width:auto; padding: 10px 30px;">Continue</button>
+		</div>
+
+		<div class="app-container" id="app">
+			<div id="s1" class="step active"><label>Who for?</label>
+                <button class="who-btn" onclick="setWho(this,'parents')">Parents</button>
+                <button class="who-btn" onclick="setWho(this,'grandparents')">Grandparents</button>
+                <button class="who-btn" onclick="setWho(this,'friend')">Friend</button>
+                <button class="who-btn" onclick="setWho(this,'partner')">Partner</button>
+                <button class="who-btn" onclick="setWho(this,'teacher')">Teacher</button>
+                <button class="btn" onclick="next(2)">Continue</button>
+            </div>
+			<div id="s2" class="step">
+				<label>Age?</label>
+				<input type="number" id="age" 
+				placeholder="Enter age...">
+				<button class="btn" onclick="next(3)">Continue</button></div>
+            <div id="s3" class="step">
+				<label>Gift Type</label><select id="type">
+					<option>Cozy</option><option>Funny</option>
+					<option>Cool Tech</option></select>
+                <label>Budget</label>
+				<select id="budget"><option value="25">$0 - $25</option>
+					<option value="75">$25 - $75</option></select>
+                <button class="btn" onclick="find()">Find Gifts</button>
+            </div>
         </div>
-        <div id="res" style="width:380px; display:none;"></div>
+        <div id="resSide"></div>
     </div>
     <script>
-        let step = 0;
-        const msg = ["I know choosing gifts can be difficult", "Let's help you find something!!"];
-        const gifts = [{n:"Sloth Mug", i:"🦥", url:"https://amazon.com"}, {n:"Self Care Kit", i:"🧼", url:"https://amazon.com"}];
-        function say(t) { 
-            const b = document.getElementById('bubble'); b.textContent = ""; b.style.visibility = t?"visible":"hidden"; 
-            let i=0; let it = setInterval(() => { b.textContent += t[i++]; if(i>=t.length) clearInterval(it); }, 40);
+		let step=0, who="", tTimer;
+        function type(t){
+            const b=document.getElementById('bubble'); 
+			clearInterval(tTimer); b.textContent=""; 
+			b.classList.toggle('active', !!t);
+            if(!t) return;
+            let i=0; tTimer = setInterval(()=>{ b.textContent += t[i++]; if(i>=t.length) clearInterval(tTimer); }, 40);
         }
-        window.onload = () => say(msg[0]);
-        function go() {
-            if(step === 0) { step++; say(msg[1]); } 
-            else { 
-                document.getElementById('guide').style = "position:fixed; bottom:20px; right:20px; display:flex; align-items:flex-end;"; 
-                document.getElementById('cont').style.display = "none";
-                document.getElementById('wrap').style.opacity = "1"; say("");
-            }
+		//dialogues
+        window.onload=()=>type("I know choosing gifts can be difficult");
+        document.getElementById('introBtn').onclick=()=>{
+            if(step===0){ step++; type("let's help you find something!!"); }
+            else { type(""); document.getElementById('introBtn').style.display="none"; document.getElementById('pageShadow').style.display="none"; document.getElementById('guide').className="g-corner"; }
+        };
+        function setWho(el, v){
+            document.querySelectorAll('.who-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel'); who=v;
+            document.body.className = (v === 'teacher') ? '' : 'theme-' + v; // Teacher = default midnight
+            if(v==='partner') document.body.className='partner'; if(v==='friend') document.body.className='theme-friends';
         }
-        function st(n) { document.getElementById('s1').style.display=document.getElementById('s2').style.display='none'; document.getElementById(`s${n}`).style.display='block'; }
-        function find() {
-            document.getElementById('wrap').style.transform = "translateX(-15%)";
-            const r = document.getElementById('res'); r.style.display = 'block'; r.innerHTML = "";
-            say("ooo these look great");
-            gifts.forEach((g,i) => {
-                let c = document.createElement('div'); c.style = "background:#fff; padding:15px; border-radius:20px; margin-bottom:10px; position:relative; cursor:pointer;";
-                c.innerHTML = `<div onclick="this.parentNode.style.border='2px solid #000'">${g.i} <b>${g.n}</b></div><div style="margin-top:10px;"><button onclick="say('They will love it!')" style="background:#ffafd2; border:1px solid #000; border-radius:5px; padding:5px 10px;">Wrap</button> <button onclick="this.parentNode.parentNode.remove(); say('Keep searching!')" style="padding:5px 10px; border-radius:5px; border:1px solid #000;">Cancel</button></div>`;
-                r.appendChild(c);
-            });
+
+		function next(n){
+            if(n===2 && !['friend','partner'].includes(who)) n=3;
+            document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById('s'+n).classList.add('active');
+        }
+        function find(){
+            type("ooo these look great"); document.getElementById('app').style.transform="translateX(-18%)";
+            const r=document.getElementById('resSide'); r.style.display="block"; setTimeout(()=>r.style.opacity="1",100);
+            r.innerHTML = `
+
+			<div class="gift-card">
+                    <div class="dots" onclick="alert('Link: amazon.com')">⋮</div>
+                    <h4>Sloth Coffee Mug</h4><p>Funny and cozy accessory.</p>
+                    <div style="display:flex;gap:10px;margin-top:10px;">
+                        <button class="btn" style="padding:8px;font-size:0.7rem;
+						" onclick="type('They will LOVE this!!! :3')">Wrap</button>
+						<button class="btn" style="padding:8px;font-size:0.7rem;background:#eee" onclick="this.parentNode.parentNode.remove();type('Keep searching!')">Cancel</button>
+                    </div>
+                </div>`;
         }
     </script>
 </body>
