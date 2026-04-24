@@ -1,168 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title> Grifty </title>
-		<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600800&display=swap" rel="stylesheet">
-		<style>
-        :root { --mc: #ffafd2; --glass: rgba(255,255,255,0.7); 
-			--txt: #1d1d1f; --bgp: #fbbcd5; --btn-bg: #ffafd2; }
-        body.parents { --mc: #ffea70; --bgp: #f0d54a; }
-		body.grandparents { --mc: #a7f3d0; --bgp: #6ee7b7; }
-        body.bestfriend { --mc: #1e3a8a; 
-			--bgp: #1e40af; --txt: #fff; --glass: rgba(255,255,255,0.1); }
-        body.partner { --mc: #ff4d6d; 
-		--bgp: #c9184a; --txt: #000; --glass: rgba(255,255,255,0.8); }
-        * { margin:0; padding:0; box-sizing:border-box; }
-		body { font-family: 'Plus Jakarta Sans', sans-serif; 
-		background: var(--mc); color: var(--txt);
-		min-height: 100vh; display: flex; 
-		justify-content: center; align-items: center; 
-		transition: 0.5s; overflow: hidden; }
-		.wrapper-bg { 
-			position: fixed; inset: -50%; width: 200%; 
-			height: 200%; 
-			background-image: linear-gradient(30deg, var(--bgp) 12%, transparent 12.5%, transparent 87%, var(--bgp) 87.5%, var(--bgp)), linear-gradient(150deg, var(--bgp) 12%, transparent 12.5%, transparent 87%, var(--bgp) 87.5%, var(--bgp)); 
-			background-size: 80px 140px; transform: rotate(-15deg); 
-			z-index: -2; opacity: 0.4; }
-        .spot { position: fixed; background: white; 
-			filter: blur(35px); border-radius: 50%; z-index: -1; 
-			width: 160px; height: 160px; }
-        .app-container { display: flex; 
-			align-items: flex-start; gap: 40px;
-			transition: 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
-        .main-box { width: 400px; 
-			background: var(--glass); 
-			backdrop-filter: blur(20px); 
-			border-radius: 30px; padding: 25px; 
-			box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
-			border: 1px solid rgba(255,255,255,0.4); } #guide { 
-				position: fixed; z-index: 99; display: flex; 
-			flex-direction: column; align-items: center; 
-			transition: 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gifty </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* normal theme */
+            --main-color: #0a0a0b; 
+            --accent: #ffafd2;
+            --glass: rgba(28, 28, 30, 0.8);
+            --border: rgba(255, 255, 255, 0.15);
+            --txt: #ffffff;
+            --btn-txt: #000000;
+            --bg-pat: #1a1a1c;
+        }
+
+        /* changing themes
+		#ffafd2 #1d1d1f  #fbbcd5
+        #ffea70  #f0d54a #a7f3d0 #1e3a8a  #1e40af
+		*/
+        body.theme-friend { --main-color: #ffafd2; --txt: #1d1d1f; --btn-txt: #1d1d1f; --glass: rgba(255, 255, 255, 0.7); --border: rgba(255,255,255,0.6); --accent: #ffafd2; --bg-pat: #fbbcd5; }
+        body.theme-parents { --main-color: #ffea70; --txt: #1d1d1f; --btn-txt: #1d1d1f; --glass: rgba(255, 255, 255, 0.7); --border: rgba(255,255,255,0.6); --accent: #ffea70; --bg-pat: #f0d54a; }
+        body.theme-grandparents { --main-color: #a7f3d0; --txt: #1d1d1f; --btn-txt: #1d1d1f; --glass: rgba(255, 255, 255, 0.7); --border: rgba(255,255,255,0.6); --accent:      ; }
+        body.theme-bestfriend { --main-color: #1e3a8a; --txt: #ffffff; --btn-txt: #ffffff; --glass: rgba(255, 255, 255, 0.1); --border: rgba(255,255,255,0.2); --accent: #1e3a8a; --bg-pat: #1e40af; }
+        body.theme-partner { --main-color: #ff4d6d; --txt: #000000; --btn-txt: #000000; --glass: rgba(255, 255, 255, 0.8); --border: rgba(255,255,255,0.4); --accent: #ff4d6d; --bg-pat: #c9184a; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--main-color);
+            color: var(--txt);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            transition: all 0.7s ease;
+        }
+
+        /* Wrapper backgrond for normal theme */
+        .wrapper-bg {
+            position: fixed;
+            inset: -50%; width: 200%; height: 200%;
+            background-image: linear-gradient(30deg, var(--bg-pat) 12%, transparent 12.5%, transparent 87%, var(--bg-pat) 87.5%, var(--bg-pat)),
+                              linear-gradient(150deg, var(--bg-pat) 12%, transparent 12.5%, transparent 87%, var(--bg-pat) 87.5%, var(--bg-pat));
+            background-size: 80px 140px;
+            transform: rotate(-15deg);
+            z-index: -2;
+            opacity: 0.4;
+        }
+
+        .spot { position: fixed; background: white; filter: blur(40px); z-index: -1; opacity: 0.9; transition: 0.7s; }
+        .circle-spot { border-radius: 50%; width: 180px; height: 180px; }
+        .heart-spot {
+            width: 100px; height: 100px; background: white; display: none;
+            clip-path: path('M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.06 3.06 6.06 12 14.125 8.94-8.065 12-10.065 12-14.125 0-8.165-10.011-8.967-12-3.568z');
+        }
+        body.theme-partner .heart-spot { display: block; transform: scale(7); }
+        body.theme-partner .circle-spot { display: none; }
+
+        .s1 { top: 10%; left: 10%; }
+        .s2 { bottom: 10%; right: 10%; }
+
+        .app-container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+            max-width: 1100px;
+            gap: 40px;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .app-container.results-active { transform: translateX(-18%); }
+
+        .main-box { width: 100%; max-width: 420px; flex-shrink: 0; }
+        header h1 { font-size: 4rem; font-weight: 800; text-align: center; margin-bottom: 20px; letter-spacing: -3px; }
+
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        #resultsSide { width: 420px; opacity: 0; display: none; transition: opacity 0.5s ease; padding-top: 105px; }
+
+        /* guide movements */
+        #guideWrapper {
+            position: fixed; z-index: 3000; display: flex; flex-direction: column; align-items: center;
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;
+        }
         .g-center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
-        .g-corner { bottom: 20px; right: 20px; align-items: flex-end; }
-        .bubble { background: white; padding: 15px; 
-			border-radius: 20px; font-size: 0.9rem; 
-			margin-bottom: 10px; max-width: 250px; opacity: 0; 
-			transition: 0.3s; color: #000; 
-			box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .avatar { width: 80px; height: 80px; 
-			background: white; border-radius: 50%; 
-			display: flex; align-items: center; 
-			justify-content: center; font-size: 1rem; 
-			border: 3px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
-			color:#000; }
-        .step { display: none; } .step.active { display: block; animation: slideUp 0.4s; }
+        .g-corner { bottom: 30px; right: 30px; top: auto; left: auto; transform: translate(0, 0); align-items: flex-end; }
+
+        .bubble {
+            background: white; padding: 18px 25px; border-radius: 25px; font-size: 1rem; font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-width: 260px; opacity: 0; margin-bottom: 15px;
+            text-align: center; color: #000; min-height: 50px;
+        }
+        .bubble.active { opacity: 1; }
+        .g-corner .bubble { border-radius: 25px 25px 0px 25px; font-size: 0.85rem; text-align: left; }
+
+        .avatar {
+            width: 110px; height: 110px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; font-weight: 800; border: 4px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.2); pointer-events: auto; color: #000;
+        }
+        .g-corner .avatar { width: 75px; height: 75px; }
+
+        #pageShadow { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 2000; transition: 0.5s; }
+        #pageShadow.hidden { opacity: 0; visibility: hidden; }
+
+        .step { display: none; }
+        .step.active { display: block; animation: slideUp 0.5s ease; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } }
-        .btn { width: 100%; 
-			background: var(--btn-bg, #fff); color: #000; 
-			border: 3px solid #000; padding: 15px; 
-			border-radius: 15px; font-weight: 800; 
-			cursor: pointer; box-shadow: 4px 4px 0 #000; 
-			margin-top: 10px; }
-        .who-btn { width: 100%;
-			background: #fff; border: 2px solid transparent; padding: 12px; 
-			border-radius: 12px; margin-bottom: 5px; 
-			text-align: left; cursor: pointer; color:#000; font-weight: 600; }
-        .who-btn.sel { border-color: #000; }
-        #resSide { width: 400px; display: none; opacity: 0;
-			transition: 0.5s; }
-        .gift-card { background: #fff; 
-			padding: 20px; border-radius: 20px;
-			margin-bottom: 10px; position: relative; 
-			color:#000; border: 3px solid transparent; }
-        .dots { position: absolute; top: 10px; 
-			right: 10px; cursor: pointer; font-size: 1.2rem; }
-        input, select { width: 100%; padding: 12px; 
-			border-radius: 12px; border: 1px solid #ccc; margin: 10px 0; 
-			font-family: inherit; }
-        #pageShadow { position: fixed; inset: 0; 
-			background: rgba(0,0,0,0.7); 
-			backdrop-filter: blur(8px); z-index: 90; 
-			transition: 0.5s; }
 
+        .who-btn { 
+            width: 100%; background: #ffffff; border: 2px solid transparent; padding: 14px; border-radius: 15px; 
+            cursor: pointer; font-weight: 700; margin-bottom: 6px; text-align: left; color: #000;
+        }
+        .who-btn.selected { border-color: #000; background: #fafafa; }
 
-    	</style>
-	</html>
-	<!-- black n pink default theme -->
-	<body class="theme-default">
-		<div class="wrapper-bg"></div> 
-		<div class="spot" style="top: 10%; left: 10%; "></div>
-		<div class="spot" style="bottom: 10%; right: 10%;"></div>
-		<div id="pageShadow"></div>
-		<div id="guide" class="g-center">
-			<div id="bubble" class="bubble"></div>
-			<div class="avatar">DOG</div>
-			<button id="introBtn" class="btn" style="width:auto; padding: 10px 30px;">Continue</button>
-		</div>
+        input, select { 
+            width: 100%; padding: 16px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1); 
+            margin-bottom: 20px; outline: none; font-size: 1rem; background: #2c2c2e; color: #fff;
+        }
+        body[class*="theme-"] select, body[class*="theme-"] input { background: #fff; color: #000; border: 1px solid #ccc; }
 
-		<div class="app-container" id="app">
-			<div id="s1" class="step active"><label>Who for?</label>
-                <button class="who-btn" onclick="setWho(this,'parents')">Parents</button>
-                <button class="who-btn" onclick="setWho(this,'grandparents')">Grandparents</button>
-                <button class="who-btn" onclick="setWho(this,'friend')">Friend</button>
-                <button class="who-btn" onclick="setWho(this,'partner')">Partner</button>
-                <button class="who-btn" onclick="setWho(this,'teacher')">Teacher</button>
-                <button class="btn" onclick="next(2)">Continue</button>
+        .btn { 
+            width: 100%; background: var(--accent); color: var(--btn-txt); border: 3px solid #000; 
+            padding: 18px; border-radius: 20px; font-weight: 800; cursor: pointer; 
+            box-shadow: 6px 6px 0px #000; transition: 0.2s; text-transform: uppercase;
+        }
+        .btn:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0px #000; }
+        .btn:disabled { background: #3a3a3c !important; border-color: #515154; color: #7b7b80; box-shadow: none; }
+
+        /* Gift Cards */
+        .gift-card {
+            background: white; border-radius: 25px; padding: 20px; margin-bottom: 15px; position: relative; border: 3px solid transparent; transition: 0.3s; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1); color: #000;
+        }
+        .gift-card.selected { border-color: #000; }
+        .dots { position: absolute; top: 15px; right: 15px; cursor: pointer; font-size: 1.5rem; }
+        .menu-dropdown { position: absolute; top: 45px; right: 15px; background: white; padding: 10px; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.15); display: none; z-index: 100; }
+        
+        .gift-actions { display: flex; gap: 10px; margin-top: 15px; }
+        .mini-btn { flex: 1; padding: 12px; border-radius: 12px; border: 2px solid #000; font-weight: 800; font-size: 0.8rem; cursor: pointer; text-transform: uppercase;}
+        .wrap-btn { background: var(--accent); color: var(--btn-txt); }
+
+        #wrapOverlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .box-wrap { font-size: 8rem; position: relative; }
+        .gift-tag { font-size: 1.2rem; background: white; color: black; padding: 10px; border-radius: 10px; position: absolute; top: -40px; animation: dropIn 1s forwards; font-weight: 800;}
+        @keyframes dropIn { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(100px); opacity: 0; } }
+    </style>
+</head>
+<body class="theme-default">
+
+<div class="wrapper-bg"></div>
+<div class="spot circle-spot s1"></div><div class="spot circle-spot s2"></div><div class="spot circle-spot s3"></div>
+<div class="spot heart-spot s1"></div><div class="spot heart-spot s2"></div>
+
+<div id="pageShadow"></div>
+
+<div id="wrapOverlay">
+    <div class="box-wrap"><div id="wrapLabel" class="gift-tag">GIFT</div>📦</div>
+    <h2 style="margin-top:20px; font-weight: 800; color:white;">WRAPPING...</h2>
+</div>
+
+<div id="guideWrapper" class="g-center">
+    <div class="bubble" id="bubble"></div>
+    <div class="avatar" id="guideAvatar">DOG PNG</div>
+    <button class="btn" id="introBtn" style="width: auto; padding: 12px 40px; position: absolute; bottom: -85px; pointer-events: auto;">Continue</button>
+</div>
+
+<div class="app-container" id="app">
+    <div class="main-box">
+        <header><h1>Gifty.</h1></header>
+        <div class="glass-panel">
+            <div id="s1" class="step active"><label>Who for?</label>
+                <div class="who-list">
+                    <button class="who-btn" data-val="parents">Parents</button>
+                    <button class="who-btn" data-val="grandparents">Grandparents</button>
+                    <button class="who-btn" data-val="friend">Friend</button>
+                    <button class="who-btn" data-val="bestfriend">Best Friend</button>
+                    <button class="who-btn" data-val="partner">Partner</button>
+                    <button class="who-btn" data-val="other">Teacher / Relative</button>
+                </div>
+                <button class="btn" id="s1Next" disabled>Continue</button>
             </div>
-			<div id="s2" class="step">
-				<label>Age?</label>
-				<input type="number" id="age" 
-				placeholder="Enter age...">
-				<button class="btn" onclick="next(3)">Continue</button></div>
-            <div id="s3" class="step">
-				<label>Gift Type</label><select id="type">
-					<option>Cozy</option><option>Funny</option>
-					<option>Cool Tech</option></select>
-                <label>Budget</label>
-				<select id="budget"><option value="25">$0 - $25</option>
-					<option value="75">$25 - $75</option></select>
+            <div id="s2" class="step"><label>Age?</label><input type="number" id="age" placeholder="Enter age..."><span class="bypass" onclick="goPersona()">continue without age</span><button class="btn" id="ageNext" disabled>Continue</button></div>
+            <div id="s3" class="step"><label>Gift Type</label><select id="type"><option>Cozy</option><option>Social</option><option>Cool Tech</option><option>Self Care</option><option>Sporty</option><option>Chill</option><option>Funny</option><option>Light-hearted</option></select>
+                <label>Budget</label><select id="budget"><option value="low">$0 - $25</option><option value="mid">$25 - $75</option><option value="high">$100+</option></select>
                 <button class="btn" onclick="find()">Find Gifts</button>
             </div>
         </div>
-        <div id="resSide"></div>
     </div>
-    <script>
-		let step=0, who="", tTimer;
-        function type(t){
-            const b=document.getElementById('bubble'); 
-			clearInterval(tTimer); b.textContent=""; 
-			b.classList.toggle('active', !!t);
-            if(!t) return;
-            let i=0; tTimer = setInterval(()=>{ b.textContent += t[i++]; if(i>=t.length) clearInterval(tTimer); }, 40);
-        }
-		//dialogues
-        window.onload=()=>type("I know choosing gifts can be difficult");
-        document.getElementById('introBtn').onclick=()=>{
-            if(step===0){ step++; type("let's help you find something!!"); }
-            else { type(""); document.getElementById('introBtn').style.display="none"; document.getElementById('pageShadow').style.display="none"; document.getElementById('guide').className="g-corner"; }
+    <div id="resultsSide"><div id="giftList"></div></div>
+</div>
+
+<script>
+    let introStep=0, who="", tTimer, currentGiftIndex=0;
+    const bubble=document.getElementById('bubble'), wrapper=document.getElementById('guideWrapper'), introBtn=document.getElementById('introBtn');
+
+    function type(t){
+        clearInterval(tTimer); bubble.classList.remove('active'); bubble.textContent="";
+        if(!t) return;
+        setTimeout(()=>{
+            bubble.classList.add('active'); let i=0;
+            tTimer=setInterval(()=>{ bubble.textContent+=t.charAt(i); i++; if(i>=t.length) clearInterval(tTimer); }, 45);
+        }, 150);
+    }
+
+    window.onload=()=>type("I know choosing gifts can be difficult");
+
+    introBtn.onclick=()=>{
+        if(introStep===0){ introStep++; type("let's help you find something!!"); }
+        else { type(""); introBtn.style.display="none"; document.getElementById('pageShadow').classList.add('hidden'); wrapper.className="g-corner"; }
+    };
+
+    document.querySelectorAll('.who-btn').forEach(b=>{
+        b.onclick=function(){
+            document.querySelectorAll('.who-btn').forEach(btn=>btn.classList.remove('selected'));
+            this.classList.add('selected'); who=this.dataset.val; document.getElementById('s1Next').disabled=false;
+            document.body.className = (who === 'other') ? '' : 'theme-' + who;
         };
-        function setWho(el, v){
-            document.querySelectorAll('.who-btn').forEach(b=>b.classList.remove('sel')); el.classList.add('sel'); who=v;
-            document.body.className = (v === 'teacher') ? '' : 'theme-' + v; // Teacher = default midnight
-            if(v==='partner') document.body.className='partner'; if(v==='friend') document.body.className='theme-friends';
-        }
+    });
 
-		function next(n){
-            if(n===2 && !['friend','partner'].includes(who)) n=3;
-            document.querySelectorAll('.step').forEach(s=>s.classList.remove('active')); document.getElementById('s'+n).classList.add('active');
-        }
-        function find(){
-            type("ooo these look great"); document.getElementById('app').style.transform="translateX(-18%)";
-            const r=document.getElementById('resSide'); r.style.display="block"; setTimeout(()=>r.style.opacity="1",100);
-            r.innerHTML = `
+    document.getElementById('s1Next').onclick=()=>{ document.getElementById('s1').classList.remove('active'); if(['friend','bestfriend','partner'].includes(who)) document.getElementById('s2').classList.add('active'); else goPersona(); };
+    document.getElementById('age').oninput=(e)=>document.getElementById('ageNext').disabled=e.target.value<=0;
+    function goPersona(){ document.getElementById('s1').classList.remove('active'); document.getElementById('s2').classList.remove('active'); document.getElementById('s3').classList.add('active'); }
+    document.getElementById('ageNext').onclick=goPersona;
 
-			<div class="gift-card">
-                    <div class="dots" onclick="alert('Link: amazon.com')">⋮</div>
-                    <h4>Sloth Coffee Mug</h4><p>Funny and cozy accessory.</p>
-                    <div style="display:flex;gap:10px;margin-top:10px;">
-                        <button class="btn" style="padding:8px;font-size:0.7rem;
-						" onclick="type('They will LOVE this!!! :3')">Wrap</button>
-						<button class="btn" style="padding:8px;font-size:0.7rem;background:#eee" onclick="this.parentNode.parentNode.remove();type('Keep searching!')">Cancel</button>
-                    </div>
+	// categories, links
+
+    const db = [
+        {n:"Sloth Coffee Mug", d:"Funny and cozy accessory.", p:19, t:["Cozy", "Funny"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/Decodyne-Sloth-Funny-Coffee-Gifts/dp/B07YNXLWJ9"},
+        {n:"Flowers!", d:"A beautiful arrangement.", p:12, t:["Light-hearted", "Social"], r:["grandparents"], url:"https://www.amazon.com/Lucagift-Gifts-Grandma-Grandkids-Granddaughter/dp/B0FT2DV65Z"},
+        {n:"Mini Turtle", d:"Small and emotional token.", p:8, t:["Light-hearted", "Cozy"], r:["grandparents"], url:"https://www.amazon.com/4THFARMES-Granddaughter-Grandson-Presents-Emotional/dp/B0DF7KYJ4D"},
+        {n:"Wrench Mug", d:"For the handy grandfather.", p:24, t:["Funny"], r:["grandparents"], url:"https://www.amazon.com/Onebttl-Wrench-Mug-Grandfather-Granddaughter/dp/B0BYN86962"},
+        {n:"Dad Jokes Tumbler", d:"Bad jokes, cold drinks.", p:11, t:["Funny"], r:["parents","grandparents"], url:"https://www.amazon.com/dp/B0CSNFBXBJ"},
+        {n:"Vintage Snapback", d:"Old school cool aesthetic.", p:34, t:["Chill", "Light-hearted"], r:["parents","grandparents"], url:"https://www.amazon.com/Vintage-Mom-Dad-Hats-Snapback/dp/B0DWPJ34JP"},
+        {n:"Grandkids Sign", d:"Heartwarming home decor.", p:17, t:["Funny", "Cozy"], r:["grandparents"], url:"https://www.amazon.com/Grandkids-Birthday-Grandfather-Granddaughter-Retirement/dp/B0GBWDJHN2"},
+        {n:"Sunflower Earrings", d:"Elegant floral jewelry.", p:49, t:["Self Care", "Light-hearted"], r:["grandparents"], url:"https://www.amazon.com/Grandma-Parents-Sunflower-Earrings-Grandmom/dp/B09NSPZFMB"},
+        {n:"Birthstone Necklace", d:"Personal and elegant piece.", p:49, t:["Self Care"], r:["grandparents"], url:"https://www.amazon.com/LEXLUNE-Necklace-Sterling-Birthstone-Grandmother/dp/B0DFPRS9X3"},
+        {n:"Funny Lamp", d:"Unique lighting for the room.", p:14, t:["Funny"], r:["bestfriend","parents","grandparents"], url:"https://www.amazon.com/Birthday-Boyfriend-Girlfriend-Elephant-Christmas/dp/B0CGXSKGXL"},
+        {n:"Parent Prank Gift", d:"Small but hilarious surprise.", p:6, t:["Funny"], r:["parents"], url:"https://www.amazon.com/gp/aw/d/B0GDYDJV8V/"},
+        {n:"Murder Mystery Party", d:"A social night of investigation.", p:34, t:["Social"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/Murder-Mystery-Party-Games-Taste/dp/B00000J00M"},
+        {n:"Self Care Partner Kit", d:"Relaxation for two.", p:20, t:["Self Care"], r:["partner"], url:"https://www.amazon.com/gp/aw/d/B0B7V56B7H/"},
+        {n:"Herd Mentality", d:"Ultimate social board game.", p:11, t:["Chill", "Social"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/Herd-Mentality-Udderly-Hilarious-Family/dp/B093HBBMPT"},
+        {n:"Exploding Kittens (Adult)", d:"Party game for grown ups.", p:24, t:["Funny", "Chill"], r:["parents","bestfriend","friend","grandparents"], minAge:17, url:"https://www.amazon.com/Exploding-Kittens-Horrible-Therapist-Unpleasant/dp/B0D2JG7873"},
+        {n:"Car Perfume Diffuser", d:"Aromatic car accessory.", p:15, t:["Self Care"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/Fancemot-Fresheners-Diffuser-Perfume-Fragrance/dp/B0D6KDS3ZV"},
+        {n:"Gucci Bloom", d:"Premium floral fragrance.", p:50, t:["Self Care"], r:["partner","parents"], minAge:18, url:"https://www.amazon.com/Gucci-Bloom-3-3-Edp-Women/dp/B0757ZLMLZ"},
+        {n:"Britney Spears Perfume", d:"Classic sweet scent.", p:31, t:["Chill"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/CIRCUS-FANTASY-Britney-Spears-Perfume/dp/B002NZMNXM"},
+        {n:"Perry Ellis Spray", d:"Daily fragrance.", p:30, t:["Cozy"], r:["partner","bestfriend"], url:"https://www.amazon.com/Perry-Parfum-Spray-Women-Ounce/dp/B0074OLDLK"},
+        {n:"Confessions Rebel", d:"Bold and daring vibe.", p:45, t:["Funny", "Chill"], r:["partner"], minAge:16, url:"https://www.amazon.com/Confessions-Rebel-Get-Room-EDP/dp/B0G1CVLV23"},
+        {n:"Retro Camera", d:"Classic photography style.", p:35, t:["Social"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/EJXHKNF-Autofocus-Waist-Level-Photography-Beginners/dp/B0GDDX7BXN"},
+        {n:"Keychain 32GB", d:"Unique storage.", p:39, t:["Chill"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/DollRank-Keychain-Portable-Collectible-Green32GB/dp/B0G6ZTG4GF"},
+        {n:"Digital Keychain Cam", d:"Lo-fi pocket photography.", p:39, t:["Chill"], r:["friend","other"], minAge:13, url:"https://www.amazon.ca/Digital-Recording-Shooting-Filters-Keychain/dp/B0GHNQLR62"},
+        {n:"Rabbit Pendant", d:"Soft aesthetic keychain.", p:6, t:["Cozy"], r:["friend","partner"], maxAge:17, url:"https://www.amazon.com/Miokkley-Keychain-Backpack-Rabbit-Pendant/dp/B0DFWNWCQ6"},
+        {n:"Clicker Keychain", d:"Tactile fidget.", p:14, t:["Chill"], r:["friend","partner"], maxAge:16, url:"https://www.amazon.com/Keyboard-Keychain-Decompression-Clicker-Morandi/dp/B0F539R12Z"},
+        {n:"TP-7 Field Recorder", d:"High-end sound gear.", p:1000, t:["Cool Tech"], r:["bestfriend","parents","grandparents","partner"], minAge:18, url:"https://teenage.engineering/store/tp-7"},
+        {n:"Coffee Cat Desk Pad", d:"Large desk mat.", p:27, t:["Chill", "Cozy"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.yunzii.com/en-ca/collections/mouse-pad/products/yunzii-keynovo-mouse-mat-desk-pad-coffee-cat"}
+    ];
+
+    function find() {
+        const p=document.getElementById('type').value, b=document.getElementById('budget').value, age=parseInt(document.getElementById('age').value)||0;
+        let filtered = db.filter(g => {
+            const mWho=g.r.includes(who), mType=g.t.includes(p);
+            let mBud=(b==='low')?g.p<=25:(b==='mid')?(g.p>25 && g.p<=75):g.p>75;
+            return mWho && mType && mBud && (!g.minAge || age>=g.minAge) && (!g.maxAge || age<=g.maxAge);
+        });
+
+        if(!filtered.length){ type("Nothing found. Try a different combo!"); return; }
+        type("ooo these look great"); document.getElementById('app').classList.add('results-active');
+        const rs=document.getElementById('resultsSide'); rs.style.display="block"; setTimeout(()=>rs.style.opacity="1",100);
+
+        const list=document.getElementById('giftList'); list.innerHTML="";
+        filtered.slice(currentGiftIndex, currentGiftIndex+2).forEach((item, idx)=>{
+            const card=document.createElement('div'); card.className='gift-card'; card.id=`gift-${idx}`;
+            card.onclick=()=>{ document.querySelectorAll('.gift-card').forEach(c=>c.classList.remove('selected')); card.classList.add('selected'); };
+            card.innerHTML=`<button class="dots" onclick="toggleMenu(event,${idx})">⋮</button>
+                <div class="menu-dropdown" id="menu-${idx}"><a href="${item.url}" target="_blank" style="font-size:0.75rem; font-weight:800; color:#007aff; text-decoration:none;">View Link</a></div>
+                <h4 style="font-weight:800;">${item.n}</h4><p style="font-size:0.8rem; color:#666;">${item.d}</p>
+                <div class="gift-actions">
+                    <button class="mini-btn wrap-btn" onclick="wrap(event,'${item.n}')">Wrap</button>
+                    <button class="mini-btn cancel-btn" onclick="cancel(event,${idx})">Cancel</button>
                 </div>`;
-        }
-    </script>
+            list.appendChild(card);
+        });
+        currentGiftIndex=(currentGiftIndex+2>=filtered.length)?0:currentGiftIndex+2;
+    }
+
+    function toggleMenu(e,id){ e.stopPropagation(); document.querySelectorAll('.menu-dropdown').forEach(d=>d.style.display='none'); document.getElementById(`menu-${id}`).style.display='block'; }
+    function wrap(e,n){ e.stopPropagation(); document.getElementById('wrapLabel').textContent=n; document.getElementById('wrapOverlay').style.display='flex'; type("I'm sure they're gonna LOVE this!!! come back soon :3"); setTimeout(()=>document.getElementById('wrapOverlay').style.display='none', 2500); }
+    function cancel(e,id){ e.stopPropagation(); const c=document.getElementById(`gift-${id}`); c.style.opacity="0"; setTimeout(()=>c.remove(),300); type("It's okayy keep searching you'll find something better"); }
+    window.onclick=()=>document.querySelectorAll('.menu-dropdown').forEach(d=>d.style.display='none');
+</script>
 </body>
 </html>
