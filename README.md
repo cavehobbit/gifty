@@ -1,1 +1,3 @@
 It's a one page site that helps you pick gifts for your loved ones it just asks Who is it for? How old are they? What's the budget? Done. The whole look of the site changes depending on who you’re buying for. I also added a "wrap" feature that wraps the gifts because why not. If you see something you actually like, you hit wrap and there’s an animation of the gift going into a box. If you don't like the gift, you just hit cancel and the card vanishes so you can keep looking.
+
+update: added a panic button that allows quick gift selection!
