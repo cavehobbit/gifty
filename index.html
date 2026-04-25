@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gifty </title>
+    <title>Gifty</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
 		*/
         body.theme-friend { --main-color: #ffafd2; --txt: #1d1d1f; --btn-txt: #1d1d1f; --glass: rgba(255, 255, 255, 0.7); --border: rgba(255,255,255,0.6); --accent: #ffafd2; --bg-pat: #fbbcd5; }
         body.theme-parents { --main-color: #ffea70; --txt: #1d1d1f; --btn-txt: #1d1d1f; --glass: rgba(255, 255, 255, 0.7); --border: rgba(255,255,255,0.6); --accent: #ffea70; --bg-pat: #f0d54a; }
-        body.theme-grandparents { --main-color: #a7f3d0; --txt: #1d1d1f; --btn-txt: #1d1d1f; --glass: rgba(255, 255, 255, 0.7); --border: rgba(255,255,255,0.6); --accent:      ; }
+        body.theme-grandparents { --main-color: #a7f3d0; --txt: #1d1d1f; --btn-txt: #1d1d1f; --glass: rgba(255, 255, 255, 0.7); --border: rgba(255,255,255,0.6); --accent: #a7f3d0; --bg-pat: #6ee7b7; }
         body.theme-bestfriend { --main-color: #1e3a8a; --txt: #ffffff; --btn-txt: #ffffff; --glass: rgba(255, 255, 255, 0.1); --border: rgba(255,255,255,0.2); --accent: #1e3a8a; --bg-pat: #1e40af; }
         body.theme-partner { --main-color: #ff4d6d; --txt: #000000; --btn-txt: #000000; --glass: rgba(255, 255, 255, 0.8); --border: rgba(255,255,255,0.4); --accent: #ff4d6d; --bg-pat: #c9184a; }
 
@@ -56,31 +56,32 @@
             z-index: -2;
             opacity: 0.4;
         }
-
         .spot { position: fixed; background: white; filter: blur(40px); z-index: -1; opacity: 0.9; transition: 0.7s; }
-        .circle-spot { border-radius: 50%; width: 180px; height: 180px; }
+        .circle-spot { border-radius: 50%; width: 180px; height: 180px; display: none; }
         .heart-spot {
             width: 100px; height: 100px; background: white; display: none;
             clip-path: path('M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.06 3.06 6.06 12 14.125 8.94-8.065 12-10.065 12-14.125 0-8.165-10.011-8.967-12-3.568z');
         }
-        body.theme-partner .heart-spot { display: block; transform: scale(7); }
+        body.theme-partner .heart-spot { display: block; }
+        body.theme-partner .heart-spot.s1 { top: 50%; left: 15%; transform: translateY(-50%) scale(7.5); }
+        body.theme-partner .heart-spot.s2 { top: 50%; right: 15%; transform: translateY(-50%) scale(7.5); }
         body.theme-partner .circle-spot { display: none; }
 
         .s1 { top: 10%; left: 10%; }
-        .s2 { bottom: 10%; right: 10%; }
+        .s2 { bottom: 15%; right: 10%; }
 
         .app-container {
             display: flex;
             align-items: flex-start;
             justify-content: center;
             width: 100%;
-            max-width: 1100px;
+            max-width: 1150px;
             gap: 40px;
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .app-container.results-active { transform: translateX(-18%); }
 
-        .main-box { width: 100%; max-width: 420px; flex-shrink: 0; }
+        .main-box { width: 100%; max-width: 420px; flex-shrink: 0; transition: all 0.8s ease; }
         header h1 { font-size: 4rem; font-weight: 800; text-align: center; margin-bottom: 20px; letter-spacing: -3px; }
 
         .glass-panel {
@@ -103,18 +104,20 @@
         .g-corner { bottom: 30px; right: 30px; top: auto; left: auto; transform: translate(0, 0); align-items: flex-end; }
 
         .bubble {
-            background: white; padding: 18px 25px; border-radius: 25px; font-size: 1rem; font-weight: 600;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-width: 260px; opacity: 0; margin-bottom: 15px;
-            text-align: center; color: #000; min-height: 50px;
+            background: white; padding: 36px 50px; border-radius: 25px; font-size: 2rem; font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-width: 520px; opacity: 0; margin-bottom: 30px;
+            text-align: center; color: #000; min-height: 100px; display: block; order: -1;
         }
+        .g-center .bubble { padding: 24px 35px; font-size: 1.4rem; min-height: 60px; max-width: 380px; }
         .bubble.active { opacity: 1; }
-        .g-corner .bubble { border-radius: 25px 25px 0px 25px; font-size: 0.85rem; text-align: left; }
+        .g-corner .bubble { border-radius: 25px 25px 0px 25px; font-size: 1.1rem; text-align: left; padding: 16px 20px; max-width: 220px; min-height: auto; }
 
         .avatar {
-            width: 110px; height: 110px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 1rem; font-weight: 800; border: 4px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.2); pointer-events: auto; color: #000;
+            width: 220px; height: 220px; background: transparent; border-radius: 0; display: flex; align-items: center; justify-content: center;
+            border: none; box-shadow: none; pointer-events: auto; overflow: hidden; cursor: pointer;
         }
-        .g-corner .avatar { width: 75px; height: 75px; }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .g-corner .avatar { width: 180px; height: 180px; }
 
         #pageShadow { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 2000; transition: 0.5s; }
         #pageShadow.hidden { opacity: 0; visibility: hidden; }
@@ -135,6 +138,7 @@
         }
         body[class*="theme-"] select, body[class*="theme-"] input { background: #fff; color: #000; border: 1px solid #ccc; }
 
+        /* with black shadow */
         .btn { 
             width: 100%; background: var(--accent); color: var(--btn-txt); border: 3px solid #000; 
             padding: 18px; border-radius: 20px; font-weight: 800; cursor: pointer; 
@@ -142,6 +146,14 @@
         }
         .btn:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0px #000; }
         .btn:disabled { background: #3a3a3c !important; border-color: #515154; color: #7b7b80; box-shadow: none; }
+
+        /* another featuree (panic button) */
+        .panic-link {
+            display: block; text-align: center; margin-top: 20px; font-size: 0.8rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; text-decoration: underline;
+            opacity: 0.7; transition: opacity 0.2s; color: var(--txt);
+        }
+        .panic-link:hover { opacity: 1; }
 
         /* Gift Cards + a wraping feature */
         .gift-card {
@@ -154,37 +166,20 @@
         .gift-actions { display: flex; gap: 10px; margin-top: 15px; }
         .mini-btn { flex: 1; padding: 12px; border-radius: 12px; border: 2px solid #000; font-weight: 800; font-size: 0.8rem; cursor: pointer; text-transform: uppercase;}
         .wrap-btn { background: var(--accent); color: var(--btn-txt); }
+        .cancel-btn { background: #f2f2f7; color: #000; }
 
         #wrapOverlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 5000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .box-wrap { font-size: 8rem; position: relative; }
         .gift-tag { font-size: 1.2rem; background: white; color: black; padding: 10px; border-radius: 10px; position: absolute; top: -40px; animation: dropIn 1s forwards; font-weight: 800;}
         @keyframes dropIn { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(100px); opacity: 0; } }
-        /* another featuree (panic button) */
-        .panic-link {
-            display: block;
-            text-align: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            text-decoration: underline;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-            color: var(--txt);
-
-        }
-
-        .panic-link:hover {
-            opacity: 1;
-        }
-    
+        
+        .bypass { display:block; text-align:center; font-size:0.8rem; text-decoration:underline; cursor:pointer; margin-bottom:15px; color: var(--txt) }
     </style>
 </head>
 <body class="theme-default">
 
 <div class="wrapper-bg"></div>
-<div class="spot circle-spot s1"></div><div class="spot circle-spot s2"></div><div class="spot circle-spot s3"></div>
+<div class="spot circle-spot s1"></div><div class="spot circle-spot s2"></div>
 <div class="spot heart-spot s1"></div><div class="spot heart-spot s2"></div>
 
 <div id="pageShadow"></div>
@@ -196,15 +191,18 @@
 
 <div id="guideWrapper" class="g-center">
     <div class="bubble" id="bubble"></div>
-    <div class="avatar" id="guideAvatar">DOG PNG</div>
+    <div class="avatar" id="guideAvatar">
+        <img src="fox1.png" alt="fox">
+    </div>
     <button class="btn" id="introBtn" style="width: auto; padding: 12px 40px; position: absolute; bottom: -85px; pointer-events: auto;">Continue</button>
 </div>
 
-<div class="app-container" id="app">
+<div class="app-container" id="appContainer">
     <div class="main-box">
         <header><h1>Gifty.</h1></header>
         <div class="glass-panel">
-            <div id="s1" class="step active"><label>Who for?</label>
+            <div id="s1" class="step active">
+                <label>Who is it for?</label>
                 <div class="who-list">
                     <button class="who-btn" data-val="parents">Parents</button>
                     <button class="who-btn" data-val="grandparents">Grandparents</button>
@@ -215,11 +213,33 @@
                 </div>
                 <button class="btn" id="s1Next" disabled>Continue</button>
             </div>
-            <div id="s2" class="step"><label>Age?</label><input type="number" id="age" placeholder="Enter age..."><span class="bypass" onclick="goPersona()">continue without age</span><button class="btn" id="ageNext" disabled>Continue</button></div>
-            <div id="s3" class="step"><label>Gift Type</label><select id="type"><option>Cozy</option><option>Social</option><option>Cool Tech</option><option>Self Care</option><option>Sporty</option><option>Chill</option><option>Funny</option><option>Light-hearted</option></select>
-                <label>Budget</label><select id="budget"><option value="low">$0 - $25</option><option value="mid">$25 - $75</option><option value="high">$100+</option></select>
-                <button class="btn" onclick="find()">Find Gifts</button> 
-                <span class="panic-link" onclick="panicMode()"> I'm desperate</span>
+            <div id="s2" class="step">
+                <!-- the Welcome sreen -->
+                <label>How old are they?</label>
+                <input type="number" id="age" placeholder="Enter age...">
+                <span class="bypass" onclick="goPersona()">continue without age</span>
+                <button class="btn" id="ageNext" disabled>Continue</button>
+            </div>
+            <div id="step-3" class="step">
+                <label>Gift Type</label>
+                <select id="type">
+                    <option value="Cozy">Cozy</option>
+                    <option value="Social">Social</option>
+                    <option value="Cool Tech">Cool Tech</option>
+                    <option value="Self Care">Self Care</option>
+                    <option value="Sporty">Sporty</option>
+                    <option value="Chill">Chill</option>
+                    <option value="Funny">Funny</option>
+                    <option value="Light-hearted">Light-hearted</option>
+                </select>
+                <label>Budget</label>
+                <select id="budget">
+                    <option value="low">$0 - $25</option>
+                    <option value="mid">$25 - $75</option>
+                    <option value="high">$100+</option>
+                </select>
+                <button class="btn" onclick="find()">Find Gifts</button>
+                <span class="panic-link" id="panicBtn" onclick="panic()">I'm desperate</span>
             </div>
         </div>
     </div>
@@ -227,144 +247,223 @@
 </div>
 
 <script>
-    let introStep=0, who="", tTimer, currentGiftIndex=0;
-    const bubble=document.getElementById('bubble'), wrapper=document.getElementById('guideWrapper'), introBtn=document.getElementById('introBtn');
+    let introStep = 0, who = "", tTimer, currentGiftIndex = 0, foxAnimInterval = null;
+    const bubble = document.getElementById('bubble'), wrapper = document.getElementById('guideWrapper'), introBtn = document.getElementById('introBtn'), foxImg = document.querySelector('#guideAvatar img');
 
-    function type(t){
-        clearInterval(tTimer); bubble.classList.remove('active'); bubble.textContent="";
-        if(!t) return;
-        setTimeout(()=>{
-            bubble.classList.add('active'); let i=0;
-            tTimer=setInterval(()=>{ bubble.textContent+=t.charAt(i); i++; if(i>=t.length) clearInterval(tTimer); }, 45);
+    // custom typing logic
+    function type(text) {
+        clearInterval(tTimer); bubble.classList.remove('active'); bubble.textContent = "";
+        if (!text) return;
+        setTimeout(() => {
+            bubble.classList.add('active'); let i = 0;
+            // intrval logic
+            tTimer = setInterval(() => { bubble.textContent += text.charAt(i); i++; if (i >= text.length) clearInterval(tTimer); }, 60);
         }, 150);
     }
 
-    window.onload=()=>type("I know choosing gifts can be difficult");
+    function startFoxAnimation() {
+        let foxState = 1;
+        foxAnimInterval = setInterval(() => {
+            foxImg.src = foxState === 1 ? 'fox1.png' : 'fox2.png';
+            foxState = foxState === 1 ? 2 : 1;
+        }, 2000);
+    }
 
-    introBtn.onclick=()=>{
-        if(introStep===0){ introStep++; type("let's help you find something!!"); }
-        else { type(""); introBtn.style.display="none"; document.getElementById('pageShadow').classList.add('hidden'); wrapper.className="g-corner"; }
+    function stopFoxAnimation() {
+        if (foxAnimInterval) clearInterval(foxAnimInterval);
+        foxImg.src = 'fox1.png';
+    }
+
+    window.onload = () => { type("I know choosing gifts can be difficult"); startFoxAnimation(); };
+
+    introBtn.onclick = () => {
+        if (introStep === 0) { introStep++; type("let's help you find something!!"); }
+        else { 
+            type(""); 
+            stopFoxAnimation();
+            introBtn.style.display = "none"; 
+            document.getElementById('pageShadow').classList.add('hidden'); 
+            wrapper.className = "g-corner"; // move dog immediatly
+        }
     };
 
-    document.querySelectorAll('.who-btn').forEach(b=>{
-        b.onclick=function(){
-            document.querySelectorAll('.who-btn').forEach(btn=>btn.classList.remove('selected'));
-            this.classList.add('selected'); who=this.dataset.val; document.getElementById('s1Next').disabled=false;
+    document.querySelectorAll('.who-btn').forEach(b => {
+        b.onclick = function() {
+            document.querySelectorAll('.who-btn').forEach(btn => btn.classList.remove('selected'));
+            this.classList.add('selected'); who = this.dataset.val; document.getElementById('s1Next').disabled = false;
             document.body.className = (who === 'other') ? '' : 'theme-' + who;
         };
     });
 
-
-    document.getElementById('s1Next').onclick=()=>{ document.getElementById('s1').classList.remove('active'); if(['friend','bestfriend','partner'].includes(who)) document.getElementById('s2').classList.add('active'); else goPersona(); };
-    document.getElementById('age').oninput=(e)=>document.getElementById('ageNext').disabled=e.target.value<=0;
-    function goPersona(){ document.getElementById('s1').classList.remove('active'); document.getElementById('s2').classList.remove('active'); document.getElementById('s3').classList.add('active'); }
-    document.getElementById('ageNext').onclick=goPersona;
-
-	// giftcategories, links
-
-    const db = [
-        {n:"Sloth Coffee Mug", d:"Funny and cozy accessory.", p:19, t:["Cozy", "Funny"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/Decodyne-Sloth-Funny-Coffee-Gifts/dp/B07YNXLWJ9"},
-        {n:"Flowers!", d:"A beautiful arrangement.", p:12, t:["Light-hearted", "Social"], r:["grandparents"], url:"https://www.amazon.com/Lucagift-Gifts-Grandma-Grandkids-Granddaughter/dp/B0FT2DV65Z"},
-        {n:"Mini Turtle", d:"Small and emotional token.", p:8, t:["Light-hearted", "Cozy"], r:["grandparents"], url:"https://www.amazon.com/4THFARMES-Granddaughter-Grandson-Presents-Emotional/dp/B0DF7KYJ4D"},
-        {n:"Wrench Mug", d:"For the handy grandfather.", p:24, t:["Funny"], r:["grandparents"], url:"https://www.amazon.com/Onebttl-Wrench-Mug-Grandfather-Granddaughter/dp/B0BYN86962"},
-        {n:"Dad Jokes Tumbler", d:"Bad jokes, cold drinks.", p:11, t:["Funny"], r:["parents","grandparents"], url:"https://www.amazon.com/dp/B0CSNFBXBJ"},
-        {n:"Vintage Snapback", d:"Old school cool aesthetic.", p:34, t:["Chill", "Light-hearted"], r:["parents","grandparents"], url:"https://www.amazon.com/Vintage-Mom-Dad-Hats-Snapback/dp/B0DWPJ34JP"},
-        {n:"Grandkids Sign", d:"Heartwarming home decor.", p:17, t:["Funny", "Cozy"], r:["grandparents"], url:"https://www.amazon.com/Grandkids-Birthday-Grandfather-Granddaughter-Retirement/dp/B0GBWDJHN2"},
-        {n:"Sunflower Earrings", d:"Elegant floral jewelry.", p:49, t:["Self Care", "Light-hearted"], r:["grandparents"], url:"https://www.amazon.com/Grandma-Parents-Sunflower-Earrings-Grandmom/dp/B09NSPZFMB"},
-        {n:"Birthstone Necklace", d:"Personal and elegant piece.", p:49, t:["Self Care"], r:["grandparents"], url:"https://www.amazon.com/LEXLUNE-Necklace-Sterling-Birthstone-Grandmother/dp/B0DFPRS9X3"},
-        {n:"Funny Lamp", d:"Unique lighting for the room.", p:14, t:["Funny"], r:["bestfriend","parents","grandparents"], url:"https://www.amazon.com/Birthday-Boyfriend-Girlfriend-Elephant-Christmas/dp/B0CGXSKGXL"},
-        {n:"Parent Prank Gift", d:"Small but hilarious surprise.", p:6, t:["Funny"], r:["parents"], url:"https://www.amazon.com/gp/aw/d/B0GDYDJV8V/"},
-        {n:"Murder Mystery Party", d:"A social night of investigation.", p:34, t:["Social"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/Murder-Mystery-Party-Games-Taste/dp/B00000J00M"},
-        {n:"Self Care Partner Kit", d:"Relaxation for two.", p:20, t:["Self Care"], r:["partner"], url:"https://www.amazon.com/gp/aw/d/B0B7V56B7H/"},
-        {n:"Herd Mentality", d:"Ultimate social board game.", p:11, t:["Chill", "Social"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/Herd-Mentality-Udderly-Hilarious-Family/dp/B093HBBMPT"},
-        {n:"Exploding Kittens (Adult)", d:"Party game for grown ups.", p:24, t:["Funny", "Chill"], r:["parents","bestfriend","friend","grandparents"], minAge:17, url:"https://www.amazon.com/Exploding-Kittens-Horrible-Therapist-Unpleasant/dp/B0D2JG7873"},
-        {n:"Car Perfume Diffuser", d:"Aromatic car accessory.", p:15, t:["Self Care"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/Fancemot-Fresheners-Diffuser-Perfume-Fragrance/dp/B0D6KDS3ZV"},
-        {n:"Gucci Bloom", d:"Premium floral fragrance.", p:50, t:["Self Care"], r:["partner","parents"], minAge:18, url:"https://www.amazon.com/Gucci-Bloom-3-3-Edp-Women/dp/B0757ZLMLZ"},
-        {n:"Britney Spears Perfume", d:"Classic sweet scent.", p:31, t:["Chill"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/CIRCUS-FANTASY-Britney-Spears-Perfume/dp/B002NZMNXM"},
-        {n:"Perry Ellis Spray", d:"Daily fragrance.", p:30, t:["Cozy"], r:["partner","bestfriend"], url:"https://www.amazon.com/Perry-Parfum-Spray-Women-Ounce/dp/B0074OLDLK"},
-        {n:"Confessions Rebel", d:"Bold and daring vibe.", p:45, t:["Funny", "Chill"], r:["partner"], minAge:16, url:"https://www.amazon.com/Confessions-Rebel-Get-Room-EDP/dp/B0G1CVLV23"},
-        {n:"Retro Camera", d:"Classic photography style.", p:35, t:["Social"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/EJXHKNF-Autofocus-Waist-Level-Photography-Beginners/dp/B0GDDX7BXN"},
-        {n:"Keychain 32GB", d:"Unique storage.", p:39, t:["Chill"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.amazon.com/DollRank-Keychain-Portable-Collectible-Green32GB/dp/B0G6ZTG4GF"},
-        {n:"Digital Keychain Cam", d:"Lo-fi pocket photography.", p:39, t:["Chill"], r:["friend","other"], minAge:13, url:"https://www.amazon.ca/Digital-Recording-Shooting-Filters-Keychain/dp/B0GHNQLR62"},
-        {n:"Rabbit Pendant", d:"Soft aesthetic keychain.", p:6, t:["Cozy"], r:["friend","partner"], maxAge:17, url:"https://www.amazon.com/Miokkley-Keychain-Backpack-Rabbit-Pendant/dp/B0DFWNWCQ6"},
-        {n:"Clicker Keychain", d:"Tactile fidget.", p:14, t:["Chill"], r:["friend","partner"], maxAge:16, url:"https://www.amazon.com/Keyboard-Keychain-Decompression-Clicker-Morandi/dp/B0F539R12Z"},
-        {n:"TP-7 Field Recorder", d:"High-end sound gear.", p:1000, t:["Cool Tech"], r:["bestfriend","parents","grandparents","partner"], minAge:18, url:"https://teenage.engineering/store/tp-7"},
-        {n:"Coffee Cat Desk Pad", d:"Large desk mat.", p:27, t:["Chill", "Cozy"], r:["parents","grandparents","friend","bestfriend","partner","other"], url:"https://www.yunzii.com/en-ca/collections/mouse-pad/products/yunzii-keynovo-mouse-mat-desk-pad-coffee-cat"}
+    const giftDatabase = [
+        {n: "Cozy Weighted Blanket", d: "Ultimate comfort and warmth.", p: 48, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/YnM-Weighted-Blanket-Queen-Glass/dp/B08J8XXBLL"},
+        {n: "Silk Pillowcase", d: "Luxurious sleep essential.", p: 24, t: ["Self Care"], r: ["partner", "bestfriend"], url: "https://www.amazon.com/Bedsure-Pillowcase-Mulberry-Standard-Pillowcases/dp/B08PPL7F5N"},
+        {n: "Fuzzy Socks Pack", d: "Soft and warm.", p: 15, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Jefferies-Socks-Fuzzy-Giftable-Assorted/dp/B08HGHWL7K"},
+        {n: "Cute Mug", d: "Your favorite drink vessel.", p: 12, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/s?k=cute+mug"},
+        {n: "Rain Jacket", d: "Stylish and practical.", p: 45, t: ["Sporty"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/COOFANDY-Lightweight-Raincoat-Windproof-Jackets/dp/B08Q95DT3K"},
+        {n: "Hydro Flask", d: "Keeps drinks at temp.", p: 40, t: ["Sporty", "Chill"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Hydro-Flask-Stainless-Standard-Mouth/dp/B07GLXTJB5"},
+        {n: "Herschel Backpack", d: "Durable and stylish.", p: 60, t: ["Cool Tech"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Herschel-Supply-Company-Casual-Backpack/dp/B01BZ0EIAE"},
+        {n: "Marshall Speaker", d: "Vintage-style sound.", p: 119, t: ["Cool Tech"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Marshall-Acton-II-Bluetooth-Speaker/dp/B07NRQWHFF"},
+        {n: "Ring Light", d: "Perfect for content creation.", p: 30, t: ["Cool Tech"], r: ["friend", "bestfriend", "partner"], minAge: 15, url: "https://www.amazon.com/ESDDI-Dimmable-Lighting-Photography-Phone-holder/dp/B07K3PZNSX"},
+        {n: "Sketch Pad Set", d: "For the creative soul.", p: 22, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Canson-Universal-Sketch-Tablets-Binding/dp/B00BTK4OCC"},
+        {n: "Paint Set", d: "Vibrant colors for art.", p: 18, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Arteza-Acrylic-Paints-Set-Professional/dp/B07PJXCV65"},
+        {n: "Instax Mini Camera", d: "Instant film photography.", p: 70, t: ["Cool Tech"], r: ["friend", "bestfriend", "partner"], minAge: 13, url: "https://www.amazon.com/Fujifilm-Instax-Mini-Instant-Camera/dp/B00HYEI0AK"},
+        {n: "AirPods Pro", d: "Premium wireless earbuds.", p: 249, t: ["Cool Tech"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], minAge: 14, url: "https://www.amazon.com/Apple-MWP22AM-A-AirPods-Pro/dp/B07PYLT6DN"},
+        {n: "Knitting Kit", d: "Relax with a hobby.", p: 28, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Loops-Threads-Knitting-Projects-Beginners/dp/B0793L4MRW"},
+        {n: "Coffee Beans Bundle", d: "Specialty blends.", p: 35, t: ["Chill"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/San-Francisco-Bay-Coffee-Variety/dp/B00B1JCQJU"},
+        {n: "Tea Variety Pack", d: "Premium tea selection.", p: 26, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Pukka-Variety-Pack-Herbal-Teas/dp/B00FJVMHAA"},
+        {n: "Aromatherapy Diffuser", d: "Create calm vibes.", p: 29, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/VicTsing-Humidifier-Diffuser-Essential-Ultrasonic/dp/B01U3Y1WBY"},
+        {n: "Face Roller", d: "Skincare gadget.", p: 15, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/t4u-Roller-Stainless-Reduces-Puffiness/dp/B074KBRM5N"},
+        {n: "Sheet Masks Pack", d: "Spa night essentials.", p: 20, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Dermal-Collagen-Essence-Seaweed-Cucumber/dp/B00X96LMQU"},
+        {n: "Lip Balm Set", d: "Hydrate and glow.", p: 12, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Burt-Bees-Original-Lip-Balm/dp/B00028LTVM"},
+        {n: "Bath Bombs", d: "Luxe bath experience.", p: 18, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/LUSH-Fizzy-Colorful-Birthday-Gifts/dp/B017JPRVL6"},
+        {n: "Plushie Toy", d: "Adorable cuddle buddy.", p: 20, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], maxAge: 16, url: "https://www.amazon.com/Squishmallows-Official-Kellytoys-Plushies-Stuffed/dp/B08DM6HHKS"},
+        {n: "Mini Projector", d: "Movie nights anywhere.", p: 89, t: ["Cool Tech"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/AAXA-Brightness-Business-Presentations-Portable/dp/B07QYJVX8C"},
+        {n: "Phone Stand", d: "Hands-free viewing.", p: 14, t: ["Cool Tech"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/AmazonBasics-Adjustable-Multi-Angle-Smartphone-Tablet/dp/B00IBJNIRQ"},
+        {n: "Cable Organizer", d: "Keep it neat.", p: 10, t: ["Chill"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Blitzwolf-Organizer-Management-Silicone-Compatible/dp/B07WDMF4B8"},
+        {n: "Desk Lamp", d: "Bright and modern.", p: 35, t: ["Cool Tech"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/TaoTronics-Desk-Lamp-Dimmable-Adjustable/dp/B01D9RLPPU"},
+        {n: "Plant Pot", d: "Cute planter.", p: 16, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/dp/B08P2CJKWQ"},
+        {n: "Succulent Pack", d: "Low-maintenance greenery.", p: 19, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Shop-Succulents-Premium-Succulent-Collection/dp/B0160HZLGE"},
+        {n: "Indoor Herb Kit", d: "Fresh herbs anytime.", p: 24, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/AeroGarden-Sprout-Hydroponic-Growing-System/dp/B01MSZYD72"},
+        {n: "Bookmark Set", d: "Pretty page markers.", p: 8, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/s?k=cute+bookmark"},
+        {n: "Reading Light", d: "Perfect for bookworms.", p: 22, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Glocusent-Reading-Brightness-Colors-Bookmark/dp/B07WG9J1RR"},
+        {n: "Book Bundle", d: "Curated book selection.", p: 50, t: ["Cozy", "Light-hearted"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/s?k=book+set"},
+        {n: "Vinyl Record", d: "Retro music vibes.", p: 25, t: ["Chill"], r: ["friend", "bestfriend", "partner"], url: "https://www.amazon.com/s?k=vinyl+record"},
+        {n: "Record Player", d: "Vintage sound system.", p: 120, t: ["Cool Tech"], r: ["friend", "bestfriend", "partner"], url: "https://www.amazon.com/Crosley-Cruiser-Bluetooth-Portable-Record/dp/B08KSVVVZH"},
+        {n: "Headphone Stand", d: "Display your gear.", p: 18, t: ["Cool Tech"], r: ["friend", "bestfriend", "partner"], url: "https://www.amazon.com/Lamicall-Headphone-Stand-Hanger-Holder/dp/B076TJFQ9L"},
+        {n: "Gameboy Classic", d: "Nostalgic gaming.", p: 45, t: ["Cool Tech"], r: ["friend", "bestfriend", "partner", "parents"], url: "https://www.amazon.com/s?k=gameboy+classic"},
+        {n: "Nintendo Switch Game", d: "Latest gaming fun.", p: 45, t: ["Cool Tech"], r: ["friend", "bestfriend", "partner"], minAge: 12, url: "https://www.amazon.com/Nintendo-Switch-Games/b?node=14983123"},
+        {n: "Console Stand", d: "Organize gaming setup.", p: 24, t: ["Cool Tech"], r: ["friend", "bestfriend", "partner"], url: "https://www.amazon.com/s?k=console+stand"},
+        {n: "Face Mask", d: "Skincare treatment.", p: 14, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Aztec-Secret-Indian-Healing-Cleansing/dp/B00014EQ5C"},
+        {n: "Body Lotion", d: "Moisturizing cream.", p: 16, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Cetaphil-Moisturizing-Lotion-Fragrance-Hypoallergenic/dp/B00355GTSI"},
+        {n: "Hand Cream", d: "Soft hands.", p: 12, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Lanolips-Medicated-Balm-Intensive-Moisture/dp/B00C9G7GIM"},
+        {n: "Sunscreen", d: "UV protection.", p: 15, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Neutrogena-Ultra-Sheer-Protection-Lotion/dp/B000LMEKQC"},
+        {n: "Nail Art Kit", d: "Express creativity.", p: 20, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/JOAH-Stamping-Plates-Templates-Manicure/dp/B07R3J5B2M"},
+        {n: "Cute Socks", d: "Fun foot fashion.", p: 10, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/s?k=cute+socks"},
+        {n: "Hoodie", d: "Cozy layering piece.", p: 55, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Champion-Powerblend-Pullover-Sweatshirt-Pockets/dp/B08NJND59T"},
+        {n: "Beanie", d: "Stay warm and stylish.", p: 20, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/The-North-Face-Dock-Workers/dp/B00DPE9RIE"},
+        {n: "Scarf", d: "Cozy neck warmth.", p: 25, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/SCARF-Women-Viscose-Pashmina-Paisley/dp/B08DJ3VCPK"},
+        {n: "Gloves", d: "Keep hands warm.", p: 18, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Evbea-Sensitive-Touch-Screen-Winter-Gloves/dp/B07TQXL6VV"},
+        {n: "Water Bottle", d: "Stay hydrated.", p: 28, t: ["Sporty"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Contigo-AutoSeal-Vacuum-Insulated-Stainless/dp/B01AZBRLIU"},
+        {n: "Yoga Mat", d: "Exercise in comfort.", p: 35, t: ["Sporty", "Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Gaiam-Essentials-Thick-Yoga-Mat/dp/B0055MXVBE"},
+        {n: "Resistance Bands", d: "Home workout gear.", p: 18, t: ["Sporty"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/SERIOUS-STEEL-FITNESS-Resistance-Bands/dp/B078YPMY9J"},
+        {n: "Jump Rope", d: "Classic cardio tool.", p: 12, t: ["Sporty"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Auskang-Professional-Skipping-Cardio-Exercise/dp/B08HQ7YWCS"},
+        {n: "Dumbbells Set", d: "Build strength.", p: 65, t: ["Sporty"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Yes4All-Adjustable-Dumbbells-Weights-Pair/dp/B01B3TJ53W"},
+        {n: "Bluetooth Scale", d: "Track fitness.", p: 40, t: ["Cool Tech"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Renpho-Bluetooth-Bathroom-Smart-Scale/dp/B01IGPDA0A"},
+        {n: "Fitness Tracker", d: "Monitor activity.", p: 99, t: ["Cool Tech"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Fitbit-Charge-Fitness-Heart-Rate/dp/B07BBS1Q4V"},
+        {n: "Smartwatch", d: "Keep connected.", p: 200, t: ["Cool Tech"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], minAge: 13, url: "https://www.amazon.com/Apple-Watch-GPS-Space-Gray/dp/B0BDH82HJV"},
+        {n: "Wall Art Print", d: "Decorative poster.", p: 20, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/s?k=wall+art+print"},
+        {n: "Canvas Painting", d: "Framed artwork.", p: 35, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/s?k=canvas+painting"},
+        {n: "Photo Frame", d: "Display memories.", p: 15, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Americanflat-Picture-Shatter-Resistant-Tabletop-Horizontal/dp/B01N5JSY0S"},
+        {n: "String Lights", d: "Ambient lighting.", p: 18, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/AMIR-Fairy-Lights-Copper-String/dp/B01BAFWHKS"},
+        {n: "Neon Sign", d: "Cool wall decor.", p: 45, t: ["Cool Tech", "Chill"], r: ["friend", "bestfriend", "partner"], url: "https://www.amazon.com/s?k=neon+sign"},
+        {n: "Desk Organizer", d: "Tidy workspace.", p: 22, t: ["Cool Tech"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Bamboo-Desk-Organizer-Desktop-Storage/dp/B07RBZND2H"},
+        {n: "Stationery Pack", d: "Writing supplies.", p: 14, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Dazone-Stationery-Ballpoint-Fineliner-Rollerball/dp/B08DTZF11N"},
+        {n: "Journal", d: "Thoughts and dreams.", p: 16, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Leuchtturm1917-Hardcover-Numbered-Pages-Dotted/dp/B002LEXNBA"},
+        {n: "Planner", d: "Stay organized.", p: 18, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Floflow-Undated-Planner-Premium-Flexibility/dp/B08HPKBVG9"},
+        {n: "Sticky Notes", d: "Reminders and notes.", p: 8, t: ["Chill"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Post-Notes-Assorted-Colors-Pack/dp/B00007E1AR"},
+        {n: "Highlighters", d: "Bright markers.", p: 10, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Shuttle-Art-Highlighters-Markers-Assorted/dp/B07DJKSQRL"},
+        {n: "Paint Markers", d: "Creative expression.", p: 16, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Posca-Metallic-Colors-Water-Based-markers/dp/B003J1CBQM"},
+        {n: "Calligraphy Kit", d: "Artistic writing.", p: 24, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Speedball-Calligraphy-11-Piece-Set-Educational/dp/B00BQVZBWQ"},
+        {n: "Embroidery Kit", d: "Needle and thread art.", p: 20, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Inscraft-Embroidery-Cross-Full-Range/dp/B08ZL6V2K8"},
+        {n: "Origami Paper", d: "Fold paper creations.", p: 12, t: ["Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Yasutomo-Color-Origami-Paper-Sheets/dp/B0013BVSME"},
+        {n: "Candle", d: "Scented relaxation.", p: 18, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Jo-Malone-Cologne-Lime-Basil/dp/B0012MZN3C"},
+        {n: "Incense Sticks", d: "Aromatic air.", p: 10, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Gonesh-Extra-Incense-Sticks-Packs/dp/B0058J6M1Y"},
+        {n: "Essential Oils", d: "Therapeutic scents.", p: 22, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Radha-Beauty-Essential-Oils-100/dp/B01B1UEKDA"},
+        {n: "Massage Roller", d: "Muscle relief tool.", p: 25, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/RitFit-Muscle-Roller-Fitness-Recovery/dp/B07JKQL8J7"},
+        {n: "Massage Gun", d: "Deep tissue recovery.", p: 89, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Theragun-Handheld-Percussive-Massage-Device/dp/B00GSCW6E4"},
+        {n: "Eye Mask", d: "Better sleep aid.", p: 14, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Manta-Sleep-Premium-Comfortable-Blackout/dp/B00RGRFQRU"},
+        {n: "Neck Pillow", d: "Comfort support.", p: 20, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/COISUM-Memory-Pillow-Cervical-Ergonomic/dp/B081HKJG6D"},
+        {n: "Foot Spa", d: "Pamper your feet.", p: 45, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/HoMedics-Deluxe-Foot-Spa-Massage/dp/B00LZQB9TY"},
+        {n: "Face Steamer", d: "Skincare treatment.", p: 35, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/NanoSteamer-Professional-Steamer-Cleansing-Irritated/dp/B00XBHZGGE"},
+        {n: "Hair Mask", d: "Deep conditioning.", p: 16, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/OGX-Argan-Oil-Penetrating-Treatment/dp/B00B6IPGDO"},
+        {n: "Hair Serum", d: "Shine and smoothness.", p: 18, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/MOROCCANOIL-Treatment-Original-Curls-Coils/dp/B00361J2KE"},
+        {n: "Hair Brush", d: "Detangle hair gently.", p: 12, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Tangle-Teezer-Detangling-Hairbrush-Original/dp/B0055QJG5M"},
+        {n: "Ear Clip Earrings", d: "No-pierce earrings.", p: 9, t: ["Self Care"], r: ["grandparents"], url: "https://www.amazon.com/Grandma-Parents-Sunflower-Earrings-Grandmom/dp/B09NSPZFMB"},
+        {n: "Birthstone Necklace", d: "Personal and elegant piece.", p: 49, t: ["Self Care"], r: ["grandparents"], url: "https://www.amazon.com/LEXLUNE-Necklace-Sterling-Birthstone-Grandmother/dp/B0DFPRS9X3"},
+        {n: "Funny Lamp", d: "Unique lighting for the room.", p: 14, t: ["Funny"], r: ["bestfriend", "parents", "grandparents"], url: "https://www.amazon.com/Birthday-Boyfriend-Girlfriend-Elephant-Christmas/dp/B0CGXSKGXL"},
+        {n: "Parent Prank Gift", d: "Small but hilarious surprise.", p: 6, t: ["Funny"], r: ["parents"], url: "https://www.amazon.com/gp/aw/d/B0GDYDJV8V/"},
+        {n: "Murder Mystery Party", d: "A social night of investigation.", p: 34, t: ["Social"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Murder-Mystery-Party-Games-Taste/dp/B00000J00M"},
+        {n: "Self Care Partner Kit", d: "Luxury relaxation for two.", p: 20, t: ["Self Care"], r: ["partner"], url: "https://www.amazon.com/gp/aw/d/B0B7V56B7H/"},
+        {n: "Herd Mentality", d: "The ultimate social board game.", p: 11, t: ["Chill", "Social"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Herd-Mentality-Udderly-Hilarious-Family/dp/B093HBBMPT"},
+        {n: "Exploding Kittens (Adult)", d: "Party game for grown ups.", p: 24, t: ["Funny", "Chill"], r: ["parents", "bestfriend", "friend", "grandparents"], minAge: 17, url: "https://www.amazon.com/Exploding-Kittens-Horrible-Therapist-Unpleasant/dp/B0D2JG7873"},
+        {n: "Car Perfume Diffuser", d: "Aromatic car accessory.", p: 15, t: ["Self Care"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/Fancemot-Fresheners-Diffuser-Perfume-Fragrance/dp/B0D6KDS3ZV"},
+        {n: "Gucci Bloom", d: "Premium floral fragrance.", p: 50, t: ["Self Care"], r: ["partner", "parents"], minAge: 18, url: "https://www.amazon.com/Gucci-Bloom-3-3-Edp-Women/dp/B0757ZLMLZ"},
+        {n: "Britney Spears Perfume", d: "Classic sweet scent.", p: 31, t: ["Chill"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/CIRCUS-FANTASY-Britney-Spears-Perfume/dp/B002NZMNXM"},
+        {n: "Perry Ellis Spray", d: "Elegant daily fragrance.", p: 30, t: ["Cozy"], r: ["partner", "bestfriend"], url: "https://www.amazon.com/Perry-Parfum-Spray-Women-Ounce/dp/B0074OLDLK"},
+        {n: "Confessions Rebel", d: "Bold and daring vibe.", p: 45, t: ["Funny", "Chill"], r: ["partner"], minAge: 16, url: "https://www.amazon.com/Confessions-Rebel-Get-Room-EDP/dp/B0G1CVLV23"},
+        {n: "Retro Camera", d: "Classic photography style.", p: 35, t: ["Social"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/EJXHKNF-Autofocus-Waist-Level-Photography-Beginners/dp/B0GDDX7BXN"},
+        {n: "Keychain 32GB", d: "Unique storage.", p: 39, t: ["Chill"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.amazon.com/DollRank-Keychain-Portable-Collectible-Green32GB/dp/B0G6ZTG4GF"},
+        {n: "Digital Keychain Cam", d: "Lo-fi pocket photography.", p: 39, t: ["Chill"], r: ["friend", "other"], minAge: 13, url: "https://www.amazon.ca/Digital-Recording-Shooting-Filters-Keychain/dp/B0GHNQLR62"},
+        {n: "Rabbit Pendant", d: "Soft aesthetic keychain.", p: 6, t: ["Cozy"], r: ["friend", "partner"], maxAge: 17, url: "https://www.amazon.com/Miokkley-Keychain-Backpack-Rabbit-Pendant/dp/B0DFWNWCQ6"},
+        {n: "Clicker Keychain", d: "Tactile fidget.", p: 14, t: ["Chill"], r: ["friend", "partner"], maxAge: 16, url: "https://www.amazon.com/Keyboard-Keychain-Decompression-Clicker-Morandi/dp/B0F539R12Z"},
+        {n: "TP-7 Field Recorder", d: "High-end sound gear.", p: 1000, t: ["Cool Tech"], r: ["bestfriend", "parents", "grandparents", "partner"], minAge: 18, url: "https://teenage.engineering/store/tp-7"},
+        {n: "Coffee Cat Desk Pad", d: "Large desk mat.", p: 27, t: ["Chill", "Cozy"], r: ["parents", "grandparents", "friend", "bestfriend", "partner", "other"], url: "https://www.yunzii.com/en-ca/collections/mouse-pad/products/yunzii-keynovo-mouse-mat-desk-pad-coffee-cat"}
     ];
 
-    function find() {
-        const p=document.getElementById('type').value, b=document.getElementById('budget').value, age=parseInt(document.getElementById('age').value)||0;
-        let filtered = db.filter(g => {
-            const mWho=g.r.includes(who), mType=g.t.includes(p);
-            let mBud=(b==='low')?g.p<=25:(b==='mid')?(g.p>25 && g.p<=75):g.p>75;
-            return mWho && mType && mBud && (!g.minAge || age>=g.minAge) && (!g.maxAge || age<=g.maxAge);
-        });
-
-        if(!filtered.length){ type("Nothing found. Try a different combo!"); return; }
-        type("ooo these look great"); document.getElementById('app').classList.add('results-active');
-        const rs=document.getElementById('resultsSide'); rs.style.display="block"; setTimeout(()=>rs.style.opacity="1",100);
-
-        const list=document.getElementById('giftList'); list.innerHTML="";
-        filtered.slice(currentGiftIndex, currentGiftIndex+2).forEach((item, idx)=>{
-            const card=document.createElement('div'); card.className='gift-card'; card.id=`gift-${idx}`;
-            card.onclick=()=>{ document.querySelectorAll('.gift-card').forEach(c=>c.classList.remove('selected')); card.classList.add('selected'); };
-            card.innerHTML=`<button class="dots" onclick="toggleMenu(event,${idx})">⋮</button>
-                <div class="menu-dropdown" id="menu-${idx}"><a href="${item.url}" target="_blank" style="font-size:0.75rem; font-weight:800; color:#007aff; text-decoration:none;">View Link</a></div>
+    function renderList(filtered, isPanic = false) {
+        const list = document.getElementById('giftList'); list.innerHTML = "";
+        const dataSet = filtered.slice(currentGiftIndex, currentGiftIndex + 2);
+        
+        dataSet.forEach((item, idx) => {
+            const cardId = isPanic ? `p-${idx}` : idx;
+            const card = document.createElement('div'); card.className = 'gift-card'; card.id = `gift-${cardId}`;
+            card.onclick = () => { document.querySelectorAll('.gift-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); };
+            card.innerHTML = `<button class="dots" onclick="toggleMenu(event,'${cardId}')">⋮</button>
+                <div class="menu-dropdown" id="menu-${cardId}"><a href="${item.url}" target="_blank" style="font-size:0.75rem; font-weight:800; color:#007aff; text-decoration:none;">View Link</a></div>
                 <h4 style="font-weight:800;">${item.n}</h4><p style="font-size:0.8rem; color:#666;">${item.d}</p>
                 <div class="gift-actions">
                     <button class="mini-btn wrap-btn" onclick="wrap(event,'${item.n}')">Wrap</button>
-                    <button class="mini-btn cancel-btn" onclick="cancel(event,${idx})">Cancel</button>
+                    <button class="mini-btn cancel-btn" onclick="cancel(event,'${cardId}')">Cancel</button>
                 </div>`;
             list.appendChild(card);
         });
-        currentGiftIndex=(currentGiftIndex+2>=filtered.length)?0:currentGiftIndex+2;
+        if(!isPanic) currentGiftIndex = (currentGiftIndex + 2 >= filtered.length) ? 0 : currentGiftIndex + 2;
     }
 
-    function toggleMenu(e,id){ e.stopPropagation(); document.querySelectorAll('.menu-dropdown').forEach(d=>d.style.display='none'); document.getElementById(`menu-${id}`).style.display='block'; }
-    function wrap(e,n){ e.stopPropagation(); document.getElementById('wrapLabel').textContent=n; document.getElementById('wrapOverlay').style.display='flex'; type("I'm sure they're gonna LOVE this!!! come back soon :3"); setTimeout(()=>document.getElementById('wrapOverlay').style.display='none', 2500); }
-    function cancel(e,id){ e.stopPropagation(); const c=document.getElementById(`gift-${id}`); c.style.opacity="0"; setTimeout(()=>c.remove(),300); type("It's okayy keep searching you'll find something better"); }
-    window.onclick=()=>document.querySelectorAll('.menu-dropdown').forEach(d=>d.style.display='none');
-// qucik gifts
-    const panicGifts = [
-        {n: "High-Quality Throw Blanket", d: "You literally cannot go wrong with a soft blanket", url: "https://www.amazon.com" },
-        {n: "Premium Scented Candle", d: "Smells like effort", url: "https://www.amazon.com/s?k=luxury+scented+candle" },
-        {n:  "Leather Card Holder", d: "Minimal, clean, and useful for anyone", url: "https://www.amazon.com/s?k=mid+century+modern+lamp"},
-        {n: "Aesthetic Dark lamp", d: " Makes any room look 10x better", url: "https://www.amazon.com/s?k=mid+century+modern+lamp "},
-        {m: " Coffee Mug ", d: "drink drink drink", url: "https://www.amazon.com/s?k=yeti+tumbler"},
-    ];
+    function toggleMenu(e, id) { e.stopPropagation(); document.querySelectorAll('.menu-dropdown').forEach(d => d.style.display = 'none'); document.getElementById(`menu-${id}`).style.display = 'block'; }
+    function wrap(e, n) { e.stopPropagation(); document.getElementById('wrapLabel').textContent = n; document.getElementById('wrapOverlay').style.display = 'flex'; type("I'm sure they're gonna LOVE this!!! come back soon :3"); setTimeout(() => document.getElementById('wrapOverlay').style.display = 'none', 2500); }
+    function cancel(e, id) { e.stopPropagation(); document.getElementById(`gift-${id}`).remove(); foxImg.src = 'fox3.png'; type("It's okayy keep searching you'll find something better"); }
+    window.onclick = () => document.querySelectorAll('.menu-dropdown').forEach(d => d.style.display = 'none');
 
-
-    function panicMode() {
-    type("Ok ok don't worry, these always work!!");
-    
-    // trigers the sliding ani for findGifts
-    document.getElementById('app').classList.add('results-active');
-    const rs = document.getElementById('resultsSide');
-    rs.style.display = "block";
-    setTimeout(() => rs.style.opacity = "1", 100);
-
-    const list = document.getElementById('giftList');
-    list.innerHTML = "";
-
-    // shuff
-    const shuffled = panicGifts.sort(() => 0.5 - Math.random());
-    let selected = shuffled.slice(0, 3);
-
-    selected.forEach((item, idx) => {
-        const card = document.createElement('div');
-        card.className = 'gift-card';
-        card.id = `panic-${idx}`;
-        card.innerHTML = `
-            <button class="dots" onclick="toggleMenu(event,'p-${idx}')">⋮</button>
-            <div class="menu-dropdown" id="menu-p-${idx}"><a href="${item.url}" target="_blank" style="font-size:0.75rem; font-weight:800; color:#007aff; text-decoration:none;">View Link</a></div>
-            <h4 style="font-weight:800;">${item.n}</h4><p style="font-size:0.8rem; color:#666;">${item.d}</p>
-            <div class="gift-actions">
-                <button class="mini-btn wrap-btn" onclick="wrap(event,'${item.n}')">Wrap</button>
-                <button class="mini-btn cancel-btn" onclick="this.parentNode.parentNode.remove()">Cancel</button>
-            </div>`;
-        list.appendChild(card);
+    document.getElementById('guideAvatar').addEventListener('click', () => {
+        foxImg.src = 'fox4.png';
+        setTimeout(() => { foxImg.src = 'fox1.png'; }, 300);
     });
-}
+
+    function goPersona() { document.getElementById('s2').classList.remove('active'); document.getElementById('step-3').classList.add('active'); }
+    document.getElementById('age').oninput = () => document.getElementById('ageNext').disabled = document.getElementById('age').value === '';
+    document.getElementById('ageNext').onclick = goPersona;
+    document.getElementById('s1Next').onclick = () => { document.getElementById('s1').classList.remove('active'); document.getElementById('s2').classList.add('active'); };
+
+    function find() {
+        const p = document.getElementById('type').value, b = document.getElementById('budget').value, ageVal = parseInt(document.getElementById('age').value) || 0;
+        let filtered = giftDatabase.filter(g => {
+            const mWho = g.r.includes(who), mType = g.t.includes(p);
+            let mBud = (b === 'low') ? g.p <= 25 : (b === 'mid') ? (g.p > 25 && g.p <= 75) : g.p > 75;
+            // check aray for later
+            return mWho && mType && mBud && (!g.minAge || ageVal >= g.minAge) && (!g.maxAge || ageVal <= g.maxAge);
+        });
+
+        if (!filtered.length) { type("Nothing found. Try a different combo!"); return; }
+        type("ooo these look great"); 
+        document.getElementById('appContainer').classList.add('results-active');
+        const rs = document.getElementById('resultsSide'); rs.style.display = "block"; setTimeout(() => rs.style.opacity = "1", 100);
+        renderList(filtered);
+    }
+
+    function panic() {
+        const panicPool = [
+            {n: "High-Quality Throw Blanket", d: "Universal comfort.", url: "https://amazon.com/s?k=blanket"},
+            {n: "Premium Candle", d: "Smells like effort.", url: "https://amazon.com/s?k=candle"},
+            {n: "Aesthetic Lamp", d: "Lights up the room.", url: "https://amazon.com/s?k=lamp"}
+        ];
+        type("Ok ok don't worry, these always work!!");
+        document.getElementById('appContainer').classList.add('results-active');
+        const rs = document.getElementById('resultsSide'); rs.style.display = "block"; setTimeout(() => rs.style.opacity = "1", 100);
+        renderList(panicPool, true);
+    }
 </script>
+
 </body>
 </html>
